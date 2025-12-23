@@ -82,7 +82,7 @@ Each product includes:
 
 ### Prerequisites
 
-- Python 3.7 or higher
+- Python 3.8+ (tested with Python 3.13)
 - pip (Python package manager)
 
 ### Installation Steps
@@ -92,7 +92,8 @@ Each product includes:
    ```bash
    cd "d:\simple product management system\product_mgmt"
    ```
-2. **Create and activate a virtual environment (if not already created)**
+
+2. **Create and activate a virtual environment (recommended)**
 
    ```bash
    # Windows
@@ -103,28 +104,58 @@ Each product includes:
    python3 -m venv venv
    source venv/bin/activate
    ```
+
 3. **Install dependencies**
 
    ```bash
+   # Option 1: Install from requirements.txt (recommended)
+   pip install -r requirements.txt
+
+   # Option 2: Install manually
    pip install django pillow
    ```
 
-   Note: Dependencies are already installed in the `venv` folder if using the existing virtual environment.
-4. **Run database migrations**
+4. **Run database migrations** ⚠️ **IMPORTANT**
+
+   This step creates all necessary database tables including `django_session`, `auth_user`, and your app tables.
 
    ```bash
    python manage.py migrate
    ```
+
+   **Expected output:**
+   ```
+   Operations to perform:
+     Apply all migrations: admin, auth, contenttypes, products, sessions
+   Running migrations:
+     Applying contenttypes.0001_initial... OK
+     Applying auth.0001_initial... OK
+     Applying products.0001_initial... OK
+     Applying sessions.0001_initial... OK
+     ...
+   ```
+
+   > **Note**: If you see "no such table: django_session" error, it means migrations haven't been run. See [Troubleshooting](#troubleshooting) section below.
+
 5. **Create a superuser (optional, for Django admin)**
 
    ```bash
    python manage.py createsuperuser
    ```
+
+   Follow the prompts to create an admin account.
+
 6. **Run the development server**
 
    ```bash
    python manage.py runserver
    ```
+
+   You should see:
+   ```
+   Starting development server at http://127.0.0.1:8000/
+   ```
+
 7. **Access the application**
 
    - Open your browser and navigate to: `http://127.0.0.1:8000/`
@@ -216,6 +247,72 @@ product_mgmt/
 - User can only edit/delete their own products
 - Login required for all product management operations
 - Password hashing using Django's default authentication
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"no such table: django_session" Error**
+
+   This error occurs when database migrations haven't been run. To fix:
+
+   ```bash
+   # Make sure you're in the project root directory (where manage.py is located)
+   python manage.py migrate
+   ```
+
+   If the error persists, try recreating the database:
+
+   ```bash
+   # Delete the existing database (if it exists)
+   # Windows PowerShell
+   Remove-Item db.sqlite3 -ErrorAction SilentlyContinue
+   
+   # Linux/Mac
+   rm db.sqlite3
+
+   # Run migrations again to create fresh database
+   python manage.py migrate
+   ```
+
+2. **Migration Errors**
+
+   If you encounter migration issues:
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+3. **Static Files Not Loading**
+
+   - Ensure `DEBUG = True` in `settings.py` (for development)
+   - Check that `STATIC_URL` and `MEDIA_URL` are configured correctly
+   - Restart the development server
+
+4. **Images Not Displaying**
+
+   - Verify `MEDIA_ROOT` and `MEDIA_URL` in `settings.py`
+   - Check that `media` directory exists and has proper permissions
+   - Ensure `urlpatterns` includes static file serving in development mode
+   - The `media/` folder will be created automatically when you upload the first image
+
+5. **Login Issues**
+
+   - Verify user exists in database: `python manage.py shell` then `from django.contrib.auth.models import User; User.objects.all()`
+   - Create a new user: `python manage.py createsuperuser`
+   - Ensure migrations have been run
+
+6. **Running from Wrong Directory**
+
+   Always run `python manage.py` commands from the project root directory (where `manage.py` is located). If you see path errors, check your current directory:
+
+   ```bash
+   # Windows PowerShell
+   pwd
+   
+   # Should show: d:\simple product management system\product_mgmt
+   ```
 
 ## Assumptions & Limitations
 
