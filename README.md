@@ -1,4 +1,4 @@
-# Simple Product Management System
+# Product Management System
 
 A Django-based web application for managing products with user authentication, CRUD operations, category management, search, and filtering capabilities.
 
