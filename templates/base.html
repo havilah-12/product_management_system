@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Modern UI Styling -->
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --primary-hover: #4f46e5;
+      --success-color: #10b981;
+      --success-hover: #059669;
+      --danger-color: #ef4444;
+      --danger-hover: #dc2626;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f172a;
+      background-attachment: fixed;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .navbar {
+      background: #0f172a;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-md);
+      border-bottom: 1px solid #1e293b;
+      padding: 1rem 0;
+      position: relative;
+    }
+
+    .navbar .container-fluid {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #22d3ee !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .navbar-brand i {
+      font-size: 1.75rem;
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .content-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn {
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 0.625rem 1.25rem;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-hover) 0%, #4338ca 100%);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      color: white;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success-color) 0%, var(--success-hover) 100%);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: linear-gradient(135deg, var(--success-hover) 0%, #047857 100%);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      color: white;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger-color) 0%, var(--danger-hover) 100%);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: linear-gradient(135deg, var(--danger-hover) 0%, #b91c1c 100%);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      color: white;
+    }
+
+    .btn-outline-primary {
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline-danger {
+      border: 2px solid var(--danger-color);
+      color: var(--danger-color);
+      background: transparent;
+    }
+
+    .btn-outline-danger:hover {
+      background: var(--danger-color);
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 2px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      outline: none;
+    }
+
+    .table {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    }
+
+    .table th {
+      font-weight: 600;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      padding: 1rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .table td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+
+    .table tbody tr {
+      transition: all 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f8fafc;
+      transform: scale(1.01);
+    }
+
+    .badge {
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .page-header h3 {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+      font-size: 1.75rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.875rem;
+      color: #22d3ee;
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+    }
+
+    .user-welcome {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #22d3ee;
+      font-weight: 500;
+    }
+
+    .user-welcome i {
+      color: var(--primary-color);
+      font-size: 1.25rem;
+    }
+
+    .logout-btn {
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+    }
+
+    .img-thumbnail {
+      border-radius: 8px;
+      border: 2px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    .img-thumbnail:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-md);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: var(--border-color);
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .content-card {
+        padding: 1.5rem;
+        border-radius: 12px;
+      }
+
+      .page-header h3 {
+        font-size: 1.5rem;
+      }
+
+      .table {
+        font-size: 0.875rem;
+      }
+    }
+
+    /* Animation for page load */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-card {
+      animation: fadeInUp 0.5s ease-out;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light px-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'product_list' %}">
+      <i class="bi bi-box-seam"></i>
+      <span>Product Management System</span>
+    </a>
+
+    <div class="ms-auto d-flex align-items-center gap-3" style="position: relative; z-index: 10;">
+      {% if user.is_authenticated %}
+        <div class="user-welcome">
+          <i class="bi bi-person-circle"></i>
+          <span>{{ user.username }}</span>
+        </div>
+
+        <form method="post" action="{% url 'logout' %}" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-danger btn-sm logout-btn">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+          </button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary btn-sm">
+          <i class="bi bi-box-arrow-in-right"></i>
+          Login
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container my-5">
+  <!-- Messages -->
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+          <i class="bi bi-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' or message.tags == 'danger' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="content-card">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="mb-0">
+      <i class="bi bi-c-circle"></i> {{ now|date:"Y" }} Product Management System · Internal Use
+    </p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Auto-dismiss alerts -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all alert elements
+    const alerts = document.querySelectorAll('.alert-dismissible');
+    
+    alerts.forEach(function(alert) {
+      // Auto-dismiss after 4 seconds
+      setTimeout(function() {
+        const bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+      }, 4000);
+    });
+  });
+</script>
+
+</body>
+</html>
