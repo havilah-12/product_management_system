@@ -123,21 +123,22 @@ Each product includes:
    python manage.py migrate
    ```
 
-   **Expected output:**
-   ```
-   Operations to perform:
-     Apply all migrations: admin, auth, contenttypes, products, sessions
-   Running migrations:
-     Applying contenttypes.0001_initial... OK
-     Applying auth.0001_initial... OK
-     Applying products.0001_initial... OK
-     Applying sessions.0001_initial... OK
-     ...
+5. **Load demo data (optional but recommended)**
+
+   This will load sample users, categories, and products so you can test the application immediately:
+
+   ```bash
+   python manage.py loaddata data.json
    ```
 
-   > **Note**: If you see "no such table: django_session" error, it means migrations haven't been run. See [Troubleshooting](#troubleshooting) section below.
+   **What this loads:**
+   - Demo user account (username: `user123`, password: `User@123`)
+   - Sample categories (food, clothes, electronics, bodycare, etc.)
+   - Sample products with images
 
-5. **Create a superuser (optional, for Django admin)**
+   > **Note**: If you skip this step, you'll need to create a user account and categories manually.
+
+6. **Create a superuser**
 
    ```bash
    python manage.py createsuperuser
@@ -145,7 +146,9 @@ Each product includes:
 
    Follow the prompts to create an admin account.
 
-6. **Run the development server**
+   > **Note**: If you loaded demo data, you can skip this step and use the demo credentials instead.
+
+7. **Run the development server**
 
    ```bash
    python manage.py runserver
@@ -156,17 +159,22 @@ Each product includes:
    Starting development server at http://127.0.0.1:8000/
    ```
 
-7. **Access the application**
+8. **Access the application**
 
    - Open your browser and navigate to: `http://127.0.0.1:8000/`
    - Register a new account or login with existing credentials
 
-## Admin Credentials
+## Demo Login Credentials
+
+After loading the demo data (`python manage.py loaddata data.json`), you can use these credentials to log in:
 
 **Username**: `user123`  
 **Password**: `User@123`
 
-> **Note**: This is a test/admin account. For production, change the password immediately or create new superuser accounts.
+> **Note**: 
+> - These credentials are only available after running `loaddata data.json`
+> - This is a demo/test account. For production, change the password immediately or create new superuser accounts.
+> - If you didn't load demo data, you'll need to register a new account or create a superuser.
 
 ## Project Structure
 
